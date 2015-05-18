@@ -10,6 +10,8 @@
     </div>
   <% end %>
 
+  <%= f.date_select :date %>
+
   <%= f.fields_for :scores do |s| %>
     <div class='form-group'>
       <%= s.object.player.name %>
@@ -23,13 +25,6 @@
   <% end %>
 
   <div class='form-group'>
-    <%= f.collection_select :weapon_set_id, WeaponSet.all, :id, :name, {}, { class: 'form-control' } %>
-  </div>
-  <div class='form-group'>
-    <%= f.collection_select :map_id, Map.all, :id, :name, {}, { class: 'form-control' }  %>
-  </div>
-
-  <div class='form-group'>
-    <%= f.submit "&nbsp;".html_safe, class: 'start-button' %>
+    <%= f.submit "Save"%>
   </div>
 <% end %>

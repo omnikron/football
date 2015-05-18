@@ -1,0 +1,43 @@
+body {
+  background: black url("background.jpg") no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.container {
+  min-height: 50vh;
+}
+
+.grey-background {
+  background-color: rgb(224,224,224);
+}
+
+.oli {
+  background-color: rgb(176,224,230);
+}
+
+.paul {
+  background-color: rgb(240,230,140);
+}
+
+.nikola {
+  background-color: rgb(140,230,140);
+}
+
+.draw {
+  background-color: rgb(192,192,192);
+}
+
+.bold {
+  font-weight: bolder;
+  font-size: 110%;
+}
+
+.container {
+  background-color:rgba(50,100,100,0.4);
+}
+
+.entry-form {
+  padding: 30px 0 30px 0;
+}

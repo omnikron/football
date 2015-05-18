@@ -1,17 +1,11 @@
 class Game < ActiveRecord::Base
-  belongs_to :weapon_set
-  belongs_to :map
   has_many :players, through: :scores
   has_many :scores
   has_many :notes
   default_scope { includes(:scores) }
-
   accepts_nested_attributes_for :scores
 
   after_initialize :setup_scores
-
-  # games pre-watershed were entered all at once and don't have valid dating/ordering
-  WATERSHED = DateTime.civil(2014,8,19,00,21)
 
   class << self
     def total_score(games = nil)
@@ -31,10 +25,6 @@ class Game < ActiveRecord::Base
       joins('LEFT OUTER JOIN notes ON notes.game_id = games.id').where('notes.game_id IS NULL')
     end
 
-    def since_watershed
-      where(arel_table[:created_at].gteq(WATERSHED))
-    end
-
     def draws
       all.select {|g| g.draw? }
     end
@@ -43,14 +33,14 @@ class Game < ActiveRecord::Base
       (all - draws).last
     end
 
-    def wins_by(player_name)
-      player = Player.find_by_name(player_name)
-      all.select {|g| g.winner == player }
+    def wins_by(player)
+      player = player.is_a?(Player) ? player : Player.find_by_name(player)
+      player.wins
     end
 
-    def losses_by(player_name)
-      player = Player.find_by_name(player_name)
-      all.select {|g| g.loser == player }
+    def losses_by(player)
+      player = player.is_a?(Player) ? player : Player.find_by_name(player)
+      player.losses
     end
 
     def biggest_wins(count = 1)
@@ -62,14 +52,8 @@ class Game < ActiveRecord::Base
     notes.create(body: body)
   end
 
-  def different_playing_session?(game)
-    return false if game.blank?
-
-    self.created_at > game.created_at + 30.minutes
-  end
-
-  def score(player_name)
-    player = players.find_by_name(player_name)
+  def score(player)
+    player = player.is_a?(Player) ? player : Player.find_by_name(player)
     scores.where(player: player).first.score
   end
 
@@ -90,7 +74,7 @@ class Game < ActiveRecord::Base
   private
   def setup_scores
     if new_record? && scores.blank?
-      [Player.find_by_name('Paul'), Player.find_by_name('Oli')].each do |p|
+      Player.all.each do |p|
         scores.build(player: p)
       end
     end

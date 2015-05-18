@@ -14,4 +14,3 @@ gem 'bootstrap-sass'
 gem 'pry-remote'
 gem 'pry'
 gem 'bootstrap-sass-extras'
-

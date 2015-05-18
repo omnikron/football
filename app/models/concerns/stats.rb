@@ -6,7 +6,7 @@ module Stats
   end
 
   def current_winner
-    ['Paul', 'Oli'].sort_by do |player|
+    Player.all.pluck(:name).sort_by do |player|
       win_percentage(player)
     end.last
   end

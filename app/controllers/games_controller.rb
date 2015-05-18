@@ -3,8 +3,8 @@ class GamesController < ApplicationController
   helper_method :streak_winner, :current_streak, :paul, :oli
 
   def index
-    @games = Game.order('created_at DESC').limit(20)
-    @game = Game.new
+    @games = Game.order('date DESC')#.limit(20)
+    @players = Player.all
   end
 
   def top_combinations
@@ -66,11 +66,11 @@ class GamesController < ApplicationController
     end
 
     def streak_winner
-      Game.last_win.winner
+      Game.last_win.try(:winner)
     end
 
     def current_streak
-      streak_winner.streaks.last
+      streak_winner.try(:streaks).try(:last)
     end
 
     def paul

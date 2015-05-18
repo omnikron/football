@@ -1,6 +1,15 @@
 class Player < ActiveRecord::Base
   has_many :games, through: :scores
+  default_scope { order(:name) }
   has_many :scores
+
+  def wins
+    games.select {|g| g.winner == self }
+  end
+
+  def losses
+    games.select {|g| g.loser == self }
+  end
 
   def total_score
     scores.pluck(:score).sum
@@ -11,7 +20,7 @@ class Player < ActiveRecord::Base
   end
 
   def streaks
-    post_watershed_games.no_notes.inject([]) do |streaks, game|
+    games.inject([]) do |streaks, game|
       streaks << [] if streaks.empty?
       streak = streaks[-1]
       if game.winner == self || game.draw?
@@ -21,9 +30,5 @@ class Player < ActiveRecord::Base
       end
       streaks
     end
-  end
-
-  def post_watershed_games
-    games.since_watershed.includes(:scores, :players).order('created_at ASC')
   end
 end
