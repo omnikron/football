@@ -1,1 +1,1 @@
-Currently this is just for me and Paul and we're baked right into the code. 
+Football scores tracker for one-on-one between me, nikola and paul.
