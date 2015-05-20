@@ -61,10 +61,10 @@
     <h4>All games <%= link_to 'Add a game', new_game_path, class: 'btn btn-success' %></h4>
       <thead>
         <tr class='grey-background', columns='5'>
+          <th>Date</th>
           <% @players.each do |player| %>
           <th><%= player.name %></th>
           <% end %>
-          <th>Date</th>
           <th>Notes</th>
         </tr>
       </thead>
@@ -72,10 +72,10 @@
       <tbody>
         <% @games.each_with_index do |game, index| %>
           <tr class=<%= game.winner.present? ? game.winner.name.downcase : 'draw' %>>
+            <td><%= game.date.to_formatted_s(:long) %></td>
             <% @players.each do |player| %>
               <td class=<%= 'bold' if game.winner == player %>><%= game.score(player) %></td>
             <% end %>
-            <td><%= game.date %></td>
             <td>
              <% if game.notes.present? %>
                <%= game.notes.map{|note| link_to(note.player.name[0], game_note_path(game, note), class: "btn #{note.player.name.downcase}") }.join(' ').html_safe  %>
