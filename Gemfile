@@ -14,3 +14,4 @@ gem 'bootstrap-sass'
 gem 'pry-remote'
 gem 'pry'
 gem 'bootstrap-sass-extras'
+gem 'rails_12factor', group: :production
