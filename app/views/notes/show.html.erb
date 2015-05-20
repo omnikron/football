@@ -1,8 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Author:</strong>
+  <%= @note.player.name %>
+</p>
+
+<p>
   <strong>Game:</strong>
-  <%= @note.game_id %>
+  <%= @note.game.date %>
 </p>
 
 <p>
@@ -10,5 +15,5 @@
   <%= @note.body %>
 </p>
 
-<%= link_to 'Edit', edit_note_path(@note) %> |
-<%= link_to 'Back', notes_path %>
+<%= link_to 'Edit', edit_game_note_path(@game, @note) %> |
+<%= link_to 'Back', game_notes_path(@game) %>

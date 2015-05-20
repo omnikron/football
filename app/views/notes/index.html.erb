@@ -1,9 +1,9 @@
-<h1>Listing notes</h1>
+<h1>Notes for <%= @game.date.to_formatted_s(:long) %></h1>
 
-<table>
+<table class='table grey-background'>
   <thead>
     <tr>
-      <th>Game</th>
+      <th>Author</th>
       <th>Body</th>
       <th colspan="3"></th>
     </tr>
@@ -11,12 +11,11 @@
 
   <tbody>
     <% @notes.each do |note| %>
-      <tr>
-        <td><%= note.game_id %></td>
+      <tr class=<%=note.player.name.downcase%>>
+        <td><%= note.player.name %></td>
         <td><%= note.body %></td>
-        <td><%= link_to 'Show', note %></td>
-        <td><%= link_to 'Edit', edit_note_path(note) %></td>
-        <td><%= link_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_game_note_path(@game, note) %></td>
+        <td><%= link_to 'Destroy', game_note_path(@game, note), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -24,4 +23,5 @@
 
 <br>
 
-<%= link_to 'New Note', new_note_path %>
+<%= link_to 'Add a Note', new_game_note_path(@game) %>
+<%= link_to 'All Games', games_path %>

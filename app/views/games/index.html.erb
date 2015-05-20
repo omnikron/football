@@ -4,7 +4,7 @@
       <b>Total games:</b>
       <p><%= Game.count %></p>
       <b>Draws:</b>
-      <p class='draw'><%= Game.draws.count %></p>
+      <p><%= Game.draws.count %></p>
     </div>
 
   </div>
@@ -35,12 +35,15 @@
       <thead>
         <tr class='grey-background'>
           <th>Top three wins</th>
+          <th></th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
 
       <% Game.biggest_wins(3).each do |game|  %>
         <tr>
-          <td class = '<%= game.winner.name.downcase %>' >
+          <td class='<%= game.winner.name.downcase %>' >
             <%= game.winner.name %>
           </td>
         <% game.scores.order('score DESC').each do |score| %>
@@ -53,27 +56,35 @@
 </div>
 
 <div class='row grey-background'>
-  <table class='table table-condensed'>
-  <h4>All games</h4>
-  <div> <%= button_to 'Add a game', new_game_path, method: 'get', class: 'button button-info' %> </div>
-    <thead>
-      <tr class='grey-background'>
-        <% @players.each do |player| %>
-        <th><%= player.name %></th>
-        <% end %>
-        <th>Date</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @games.each_with_index do |game, index| %>
-        <tr class=<%= game.winner.present? ? game.winner.name.downcase : 'draw' %>>
+  <div class='col-md-12'>
+    <table class='table table-condensed'>
+    <h4>All games <%= link_to 'Add a game', new_game_path, class: 'btn btn-success' %></h4>
+      <thead>
+        <tr class='grey-background', columns='5'>
           <% @players.each do |player| %>
-            <td class=<%= 'bold' if game.winner == player %>><%= game.score(player) %></td>
+          <th><%= player.name %></th>
           <% end %>
-          <td><%= game.date %></td>
+          <th>Date</th>
+          <th>Notes</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+
+      <tbody>
+        <% @games.each_with_index do |game, index| %>
+          <tr class=<%= game.winner.present? ? game.winner.name.downcase : 'draw' %>>
+            <% @players.each do |player| %>
+              <td class=<%= 'bold' if game.winner == player %>><%= game.score(player) %></td>
+            <% end %>
+            <td><%= game.date %></td>
+            <td>
+             <%= link_to 'Add note', new_game_note_path(game), class: 'btn btn-success' %> 
+             <% if game.notes.present? %>
+               <%= link_to 'View notes', game_notes_path(game), class: 'btn btn-info' %> 
+             <% end %>
+           </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

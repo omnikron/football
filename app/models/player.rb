@@ -1,7 +1,9 @@
 class Player < ActiveRecord::Base
   has_many :games, through: :scores
-  default_scope { order(:name) }
+  has_many :notes
   has_many :scores
+
+  default_scope { order(:name) }
 
   def wins
     games.select {|g| g.winner == self }
