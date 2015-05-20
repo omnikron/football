@@ -12,17 +12,20 @@
   <% end %>
 
   <%= f.hidden_field :game_id, value: @game.id %>
-  <div class="field">
+
+  <div class="form-group">
     <%= f.label :player_id, 'Author' %>
     <% players = Player.all.map {|player| [player.name, player.id] } %>
     <% disabled = f.object.player.try(:id).present? ? Player.where.not(id: f.object.player.id).map(&:id) : Player.where(id: @game.notes.select(:player_id)).map(&:id) %>
-    <%= f.select :player_id, options_for_select(players, disabled: disabled, selected: @note.player.try(:id)), required: true %>
+    <%= f.select :player_id, options_for_select(players, disabled: disabled, selected: @note.player.try(:id)), {required: true}, {class: 'form-control'} %>
   </div>
-  <div class="field">
+
+  <div class="form-group">
     <%= f.label :body %><br>
-    <%= f.text_area :body, rows: 10, style: "width: 500px;" %>
+    <%= f.text_area :body, rows: 10, class: 'form-control' %>
   </div>
-  <div class="actions">
+
+  <div class="form-group">
     <%= f.submit class: 'btn btn-success' %>
   </div>
 <% end %>

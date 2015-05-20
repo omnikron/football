@@ -2,7 +2,7 @@ class Game < ActiveRecord::Base
   has_many :players, through: :scores
   has_many :scores
   has_many :notes
-  default_scope { includes(:scores) }
+  default_scope { includes(:scores, :notes) }
   accepts_nested_attributes_for :scores
 
   after_initialize :setup_scores

@@ -1,4 +1,4 @@
-<h1>Notes for <%= @game.date.to_formatted_s(:long) %></h1>
+<h4>Notes for <%= @game.date.to_formatted_s(:long) %></h4>
 
 <table class='table grey-background'>
   <thead>
@@ -14,8 +14,8 @@
       <tr class=<%=note.player.name.downcase%>>
         <td><%= note.player.name %></td>
         <td><%= note.body %></td>
-        <td><%= link_to 'Edit', edit_game_note_path(@game, note) %></td>
-        <td><%= link_to 'Destroy', game_note_path(@game, note), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_game_note_path(@game, note), class: 'btn btn-warning' %></td>
+        <td><%= link_to 'Destroy', game_note_path(@game, note), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>
@@ -23,5 +23,5 @@
 
 <br>
 
-<%= link_to 'Add a Note', new_game_note_path(@game) %>
-<%= link_to 'All Games', games_path %>
+<%= link_to 'Add a Note', new_game_note_path(@game), class: 'btn btn-success' %>
+<%= link_to 'All Games', games_path, class: 'btn btn-warning' %>

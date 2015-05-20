@@ -1,7 +1,4 @@
 <div class='row'>
-  <div class='col-md-12'>
-    <h1>Precision Kicking With Herod Sons™</h1>
-  </div>
   <div class='col-md-4'>
     <div class='grey-background'>
       <b>Total games:</b>
@@ -80,10 +77,11 @@
             <% end %>
             <td><%= game.date %></td>
             <td>
-             <%= link_to 'Add note', new_game_note_path(game), class: 'btn btn-success' %> 
              <% if game.notes.present? %>
-               <%= link_to 'View notes', game_notes_path(game), class: 'btn btn-info' %> 
+               <%= game.notes.map{|note| link_to(note.player.name[0], game_note_path(game, note), class: "btn #{note.player.name.downcase}") }.join(' ').html_safe  %>
+               <%= link_to 'All notes', game_notes_path(game), class: 'btn btn-info' %> 
              <% end %>
+             <%= link_to 'Add note', new_game_note_path(game), class: 'btn btn-success' %> 
            </td>
           </tr>
         <% end %>

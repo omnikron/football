@@ -1,19 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Author:</strong>
-  <%= @note.player.name %>
-</p>
+<div class='col-md-12 <%= @note.player.name.downcase %>'>
+  <p>
+    <strong>Game:</strong>
+    <%= @note.game.date.to_formatted_s(:long) %>
+  </p>
 
-<p>
-  <strong>Game:</strong>
-  <%= @note.game.date %>
-</p>
+  <p>
+    <strong>Author:</strong>
+    <%= @note.player.name %>
+  </p>
 
-<p>
-  <strong>Body:</strong>
-  <%= @note.body %>
-</p>
+  <p>
+    <strong>Body:</strong>
+    <%= @note.body %>
+  </p>
+</div>
 
-<%= link_to 'Edit', edit_game_note_path(@game, @note) %> |
-<%= link_to 'Back', game_notes_path(@game) %>
+<%= link_to 'Edit', edit_game_note_path(@game, @note), class: 'btn btn-warning' %>
+<%= link_to 'All notes', game_notes_path(@game), class: 'btn btn-success' %>
