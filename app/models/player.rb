@@ -5,6 +5,10 @@ class Player < ActiveRecord::Base
 
   default_scope { order(:name) }
 
+  def self.order_by_wins
+    all.sort {|p| p.wins.count }
+  end
+
   def wins
     games.select {|g| g.winner == self }
   end

@@ -1,4 +1,7 @@
 <div class='row'>
+  <div class='col-md-12'>
+    <h1>Precision Kicking With Herod Sons™</h1>
+  </div>
   <div class='col-md-4'>
     <div class='grey-background'>
       <b>Total games:</b>
@@ -19,7 +22,7 @@
           </tr>
         </thead>
 
-        <% @players.each do |player| %>
+        <% @players.order_by_wins.each do |player| %>
           <tr class='<%= player.name.downcase %>'>
             <td><%= player.name %></td>
             <td><%= Game.wins_by(player).count %></td>
