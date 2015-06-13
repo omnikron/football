@@ -68,7 +68,7 @@ class Game < ActiveRecord::Base
   end
 
   def draw?
-    scores.pluck(:score).uniq.count == 1
+    scores.group(:score).select(:score).order('score DESC').count.values.first > 1
   end
 
   private
